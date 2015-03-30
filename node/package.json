@@ -1,0 +1,20 @@
+{
+  "name": "projekt",
+  "version": "0.0.1",
+  "description": "projekt programowanie sieciowe",
+  "dependencies": {
+    "express": "4.10.2",
+    "socket.io": "^1.2.0",
+    "redis": "latest"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browser-sync": "^2.0.0",
+    "grunt-contrib-concat": "~0.5.0",
+    "grunt-contrib-uglify": "~0.7.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-libsass": "^0.2.0",
+    "grunt-spritesmith": "3.6.1"
+  }
+}
+

@@ -1,0 +1,112 @@
+// ----------------------------
+//	TRANSITION
+// ----------------------------
+
+@mixin transition($transition) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -ms-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+
+
+@mixin transition-duration($transition) {
+  -webkit-transition-duration: $transition;
+  -moz-transition-duration: $transition;
+  -ms-transition-duration: $transition;
+  -o-transition-duration: $transition;
+  transition-duration: $transition;
+}
+
+@mixin transition-timing-function($transition) {
+  -webkit-transition-timing-function: $transition;
+  -moz-transition-timing-function: $transition;
+  -ms-transition-timing-function: $transition;
+  -o-transition-timing-function: $transition;
+  transition-timing-function: $transition;
+}
+
+// ----------------------------
+//	EASING
+// ----------------------------
+
+$CubicEaseIn: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+$QuadEaseIn: cubic-bezier(0.550, 0.085, 0.680, 0.530);
+$QuadEaseOut: cubic-bezier(0.250, 0.460, 0.450, 0.940);
+$QuadEaseInOut: cubic-bezier(0.455, 0.030, 0.515, 0.955);
+$ExpoEaseOut: cubic-bezier(0.190, 1.000, 0.220, 1.000);
+
+// ----------------------------
+//	GRADIENTS
+// ----------------------------
+
+/* @include css-gradient(#dfdfdf,#f8f8f8); */
+@mixin css-gradient($from: #dfdfdf, $to: #f8f8f8) {
+  background-color: $to;
+  background-image: -webkit-gradient(linear, left top, left bottom, from($from), to($to));
+  background-image: -webkit-linear-gradient(top, $from, $to);
+  background-image: -moz-linear-gradient(top, $from, $to);
+  background-image: -o-linear-gradient(top, $from, $to);
+  background-image: linear-gradient(to bottom, $from, $to);
+}
+
+// ----------------------------
+// BOX SIZING
+// ----------------------------
+
+/* @include box-sizing(border-box); */
+@mixin box-sizing($type: border-box) {
+  -webkit-box-sizing: $type;
+  -moz-box-sizing: $type;
+  -ms-box-sizing: $type;
+  -khtml-box-sizing: $type;
+  box-sizing: $type;
+}
+
+// ----------------------------
+// BORDER RADIUS
+// ----------------------------
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+// ----------------------------
+// BOX_SHADOW
+// ----------------------------
+
+@mixin box-shadow($top, $left, $blur, $spread, $color, $inset: false) {
+  @if $inset {
+    -webkit-box-shadow: inset $top $left $blur $spread $color;
+    -moz-box-shadow: inset $top $left $blur $spread $color;
+    box-shadow: inset $top $left $blur $spread $color;
+  } @else {
+    -webkit-box-shadow: $top $left $blur $spread $color;
+    -moz-box-shadow: $top $left $blur $spread $color;
+    box-shadow: $top $left $blur $spread $color;
+  }
+}
+
+@mixin transform($value) {
+  transform: $value;
+  -webkit-transform: $value;
+  -moz-transform: $value;
+  -o-transform: $value;
+}
+
+@mixin scale($scale) {
+  @include transform(scale($scale));
+}
+
+@mixin calc($property, $expression) {
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: -o-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+  // IE-OLD
+  #{$property}: expression(#{$expression});
+}

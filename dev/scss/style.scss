@@ -1,0 +1,13 @@
+// ----------------------------
+// IMPORTING STYLES
+// ----------------------------
+
+@import "mixins";
+@import "reset";
+@import "sprite";
+@import "base";
+
+
+// page elements
+@import "_sections/board";
+@import "_sections/chat";
