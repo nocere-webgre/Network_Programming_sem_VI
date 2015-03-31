@@ -1,0 +1,103 @@
+/*
+SCSS variables are information about icon's compiled state, stored under its original file name
+
+.icon-home {
+  width: $icon-home-width;
+}
+
+The large array-like variables contain all information about a single icon
+$icon-home: x y offset_x offset_y width height total_width total_height image_path;
+
+At the bottom of this section, we provide information about the spritesheet itself
+$spritesheet: width height image $spritesheet-sprites;
+*/
+$ball-name: 'ball';
+$ball-x: 112px;
+$ball-y: 57px;
+$ball-offset-x: -112px;
+$ball-offset-y: -57px;
+$ball-width: 55px;
+$ball-height: 55px;
+$ball-total-width: 167px;
+$ball-total-height: 192px;
+$ball-image: '/static/images/sprite.png';
+$ball: 112px 57px -112px -57px 55px 55px 167px 192px '/static/images/sprite.png' 'ball';
+$my-racket-name: 'my-racket';
+$my-racket-x: 0px;
+$my-racket-y: 0px;
+$my-racket-offset-x: 0px;
+$my-racket-offset-y: 0px;
+$my-racket-width: 112px;
+$my-racket-height: 192px;
+$my-racket-total-width: 167px;
+$my-racket-total-height: 192px;
+$my-racket-image: '/static/images/sprite.png';
+$my-racket: 0px 0px 0px 0px 112px 192px 167px 192px '/static/images/sprite.png' 'my-racket';
+$opponent-racket-name: 'opponent-racket';
+$opponent-racket-x: 112px;
+$opponent-racket-y: 0px;
+$opponent-racket-offset-x: -112px;
+$opponent-racket-offset-y: 0px;
+$opponent-racket-width: 34px;
+$opponent-racket-height: 57px;
+$opponent-racket-total-width: 167px;
+$opponent-racket-total-height: 192px;
+$opponent-racket-image: '/static/images/sprite.png';
+$opponent-racket: 112px 0px -112px 0px 34px 57px 167px 192px '/static/images/sprite.png' 'opponent-racket';
+$spritesheet-width: 167px;
+$spritesheet-height: 192px;
+$spritesheet-image: '/static/images/sprite.png';
+$spritesheet-sprites: $ball $my-racket $opponent-racket;
+$spritesheet: 167px 192px '/static/images/sprite.png' $spritesheet-sprites;
+
+/*
+The provided mixins are intended to be used with the array-like variables
+
+.icon-home {
+  @include sprite-width($icon-home);
+}
+
+.icon-email {
+  @include sprite($icon-email);
+}
+*/
+@mixin sprite-width($sprite) {
+  width: nth($sprite, 5);
+}
+
+@mixin sprite-height($sprite) {
+  height: nth($sprite, 6);
+}
+
+@mixin sprite-position($sprite) {
+  $sprite-offset-x: nth($sprite, 3);
+  $sprite-offset-y: nth($sprite, 4);
+  background-position: $sprite-offset-x  $sprite-offset-y;
+}
+
+@mixin sprite-image($sprite) {
+  $sprite-image: nth($sprite, 9);
+  background-image: url(#{$sprite-image});
+}
+
+@mixin sprite($sprite) {
+  @include sprite-image($sprite);
+  @include sprite-position($sprite);
+  @include sprite-width($sprite);
+  @include sprite-height($sprite);
+}
+
+/*
+The `sprites` mixin generates identical output to the CSS template
+  but can be overridden inside of SCSS
+
+@include sprites($spritesheet-sprites);
+*/
+@mixin sprites($sprites) {
+  @each $sprite in $sprites {
+    $sprite-name: nth($sprite, 10);
+    .#{$sprite-name} {
+      @include sprite($sprite);
+    }
+  }
+}
