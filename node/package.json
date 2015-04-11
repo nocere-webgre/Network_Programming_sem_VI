@@ -3,9 +3,8 @@
   "version": "0.0.1",
   "description": "projekt programowanie sieciowe",
   "dependencies": {
-    "express": "4.10.2",
-    "socket.io": "^1.2.0",
-    "redis": "latest"
+    "express": "",
+    "socket.io": ""
   },
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -17,4 +16,3 @@
     "grunt-spritesmith": "3.6.1"
   }
 }
-
