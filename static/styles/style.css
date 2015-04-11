@@ -74,7 +74,66 @@ The `sprites` mixin generates identical output to the CSS template
 
 @include sprites($spritesheet-sprites);
 */
-body {
-  margin: 0px;
-  background: #000;
-  color: #fff; }
+html, body {
+  min-height: 100%;
+  height: 100%;
+  font-family: 'Lato', sans-serif; }
+
+.index {
+  background: url('/static/images/index_bg.jpg') no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  width: 100%; }
+  .index .wrapper {
+    width: 490px;
+    padding-right: 490px;
+    margin: 0 auto;
+    display: table;
+    height: 100%; }
+    .index .wrapper .span6 {
+      padding: 30px 0;
+      width: 50%;
+      display: table-cell;
+      vertical-align: middle; }
+  .index .logo {
+    width: 412px;
+    height: 141px;
+    background: url('/static/images/logo.png') no-repeat;
+    margin: 0 0 60px; }
+  .index .type-login input[type="text"] {
+    background: rgba(0, 0, 0, 0.2);
+    border: 0;
+    outline: 0;
+    line-height: 35px;
+    font-size: 35px;
+    color: #fff;
+    padding: 20px;
+    height: 75px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 100; }
+  .index .type-login ::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: #f2f2f2; }
+  .index .type-login :-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: #f2f2f2;
+    opacity: 1; }
+  .index .type-login ::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #f2f2f2;
+    opacity: 1; }
+  .index .type-login :-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: #f2f2f2; }
+  .index .button-play {
+    width: 336px;
+    height: 70px;
+    background: url('/static/images/button_play.png') no-repeat;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    margin: 30px auto;
+    display: block; }
+    .index .button-play:hover {
+      background-position: 0 -70px; }

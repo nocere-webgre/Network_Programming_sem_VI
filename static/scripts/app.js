@@ -1,4 +1,4 @@
-
+(function($){  'use strict'; 
 if($('.index').length > 0){
 
     //music
@@ -27,3 +27,4 @@ if($('.index').length > 0){
     });
 
 }
+}(jQuery));
