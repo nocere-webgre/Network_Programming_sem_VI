@@ -1,5 +1,8 @@
-(function($){  'use strict'; 
+(function($){  'use strict'; $("#conversation").animate({ scrollTop: $(document).height() }, "slow");
+
 if($('.index').length > 0){
+
+    var buttonPlay = $('.button-play');
 
     //music
     var snd1  = new Audio();
@@ -22,8 +25,30 @@ if($('.index').length > 0){
     }, false);
     snd2.play();
 
-    $('.button-play').hover(function(){
+    buttonPlay.hover(function(){
         snd1.play();
+    });
+
+
+    //Check server
+    var socket = io.connect('http://localhost:3000');
+    var available = false;
+    // on connection to server, ask for user's name with an anonymous callback
+
+    buttonPlay.click(function(e){
+        e.preventDefault();
+
+    });
+
+    socket.on('available', function(players){
+        available = true;
+        console.log(players);
+    });
+
+    socket.io.on('connect_error', function(err) {
+        available = false;
+        // handle server error here
+        console.log('Error connecting to server - available: '+available);
     });
 
 }

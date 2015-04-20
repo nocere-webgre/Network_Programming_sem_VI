@@ -174,7 +174,8 @@ html, body {
   padding-left: 1000px;
   width: 100%;
   box-sizing: border-box;
-  display: none; }
+  /*
+  display: none;*/ }
   .rooms .nag {
     padding: 10px;
     background: #6db3f2;

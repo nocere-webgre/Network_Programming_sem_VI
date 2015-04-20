@@ -9,7 +9,6 @@ server.listen(3000);
 
 // usernames which are currently connected to the chat
 var usernames = {};
-var uid = {};
 var players = {
     'room1': 0,
     'room2': 0,
@@ -19,17 +18,23 @@ var players = {
 var rooms = ['room1','room2','room3'];
 
 io.sockets.on('connection', function (socket) {
-	console.log('start');
+
+    socket.emit('available', players);
 
 	// when the client emits 'adduser', this listens and executes
 	socket.on('adduser', function(username){
+
+        console.log(players['room1']);
 		// store the username in the socket session for this client
 		socket.username = username;
 		// store the room name in the socket session for this client
 		socket.room = 'room1';
 		// add the client's username to the global list
-		usernames[username] = username;
-        uid[username] = socket.id;
+        usernames[username] = {
+            'username': username,
+            'id' : socket.id,
+            'room': 'room1'
+        };
 
         players['room1'] = players['room1']+1;
 		// send client to room 1
@@ -40,8 +45,8 @@ io.sockets.on('connection', function (socket) {
 		socket.broadcast.to('room1').emit('updatechat', 'SERVER', username + ' has connected to this room');
 		socket.emit('updaterooms', rooms, 'room1');
 
-        socket.emit('updatecount', usernames, uid, players);
-        socket.broadcast.emit('updatecount', usernames, uid, players);
+        socket.emit('updatecount', usernames, players);
+        socket.broadcast.emit('updatecount', usernames, players);
 	});
 	
 	// when the client emits 'sendchat', this listens and executes
@@ -64,6 +69,8 @@ io.sockets.on('connection', function (socket) {
 		socket.room = newroom;
 		socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username+' has joined this room');
 		socket.emit('updaterooms', rooms, newroom);
+
+        usernames[socket.username]['room'] = newroom;
 
         socket.emit('updatecount', usernames, players);
         socket.broadcast.emit('updatecount', usernames, players);

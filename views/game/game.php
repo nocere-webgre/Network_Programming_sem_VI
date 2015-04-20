@@ -26,10 +26,9 @@
         });
     });
 
-    socket.on('updatecount', function(x, y, z) {
-        console.log(x);
-        console.log(y);
-        console.log(z);
+    socket.on('updatecount', function(usernames, rooms) {
+        console.log(usernames);
+        console.log(rooms);
     });
 
     $(document).mousemove(function( event ){
