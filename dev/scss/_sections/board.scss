@@ -1,0 +1,13 @@
+.board {
+  position: absolute;
+  width: 1000px;
+  height: 563px;
+  background: url('/static/images/board.jpg') no-repeat;
+}
+
+.pointer {
+  position: absolute;
+  z-index: 3;
+  top: 180px;
+  @include sprite($opponent-racket);
+}
