@@ -1,5 +1,5 @@
 <div class="board">
-
+    <div id="my-racket"></div>
 </div>
 
 

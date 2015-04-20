@@ -6,11 +6,10 @@ var express = require('express')
 
 server.listen(3000);
 
-// routing
-
 
 // usernames which are currently connected to the chat
 var usernames = {};
+var uid = {};
 var players = {
     'room1': 0,
     'room2': 0,
@@ -30,6 +29,8 @@ io.sockets.on('connection', function (socket) {
 		socket.room = 'room1';
 		// add the client's username to the global list
 		usernames[username] = username;
+        uid[username] = socket.id;
+
         players['room1'] = players['room1']+1;
 		// send client to room 1
 		socket.join('room1');
@@ -39,8 +40,8 @@ io.sockets.on('connection', function (socket) {
 		socket.broadcast.to('room1').emit('updatechat', 'SERVER', username + ' has connected to this room');
 		socket.emit('updaterooms', rooms, 'room1');
 
-        socket.emit('updatecount', usernames, players);
-        socket.broadcast.emit('updatecount', usernames, players);
+        socket.emit('updatecount', usernames, uid, players);
+        socket.broadcast.emit('updatecount', usernames, uid, players);
 	});
 	
 	// when the client emits 'sendchat', this listens and executes

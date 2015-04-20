@@ -2,7 +2,17 @@
   position: absolute;
   width: 1000px;
   height: 563px;
+  cursor: none;
   background: url('/static/images/board.jpg') no-repeat;
+  overflow: hidden;
+
+  #my-racket {
+    position: absolute;
+    z-index: 3;
+    top: 290px;
+    left: 444px;
+    @include sprite($my-racket);
+  }
 }
 
 .pointer {
@@ -11,3 +21,4 @@
   top: 180px;
   @include sprite($opponent-racket);
 }
+

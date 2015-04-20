@@ -147,7 +147,18 @@ html, body {
   position: absolute;
   width: 1000px;
   height: 563px;
-  background: url('/static/images/board.jpg') no-repeat; }
+  cursor: none;
+  background: url('/static/images/board.jpg') no-repeat;
+  overflow: hidden; }
+  .board #my-racket {
+    position: absolute;
+    z-index: 3;
+    top: 290px;
+    left: 444px;
+    background-image: url(/static/images/sprite.png);
+    background-position: 0px 0px;
+    width: 112px;
+    height: 192px; }
 
 .pointer {
   position: absolute;

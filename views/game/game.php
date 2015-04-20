@@ -26,13 +26,32 @@
         });
     });
 
-    socket.on('updatecount', function(x, y) {
+    socket.on('updatecount', function(x, y, z) {
         console.log(x);
         console.log(y);
+        console.log(z);
     });
 
     $(document).mousemove(function( event ){
-        socket.emit('mouse_activity', {x: event.pageX, y: event.pageY});
+
+        var myracket = $('#my-racket');
+        var deg = 0;
+
+        if(event.pageX <= 1000){
+            socket.emit('mouse_activity', {x: event.pageX, y: event.pageY});
+
+            if(event.pageX < 500){
+                deg = (event.pageX-500)*(1/5);
+            }
+            else if(event.pageX >= 500){
+                deg = (event.pageX-500)*(1/5);
+            }
+
+            myracket.css({
+                'left': (event.pageX-myracket.width()/2)+'px',
+                'transform': 'rotate('+deg+'deg)'
+            });
+        }
     });
 
     socket.on('all_mouse_activity',function(data){
@@ -42,32 +61,18 @@
 
         var $pointer = $('.pointer[session_id="'+data.session_id+'"]');
 
-        /*if(currentMousePos.x > 500){
-            degrees = (currentMousePos.x-500)*(1/5);
+        if(data.coords.x > 500){
+            $pointer.css('left', (1000-data.coords.x)*(5/15)+320).css({
+                'transform' : 'rotate('+((-(data.coords.x+500)*(1/5))+180)+'deg)',
+                'zoom' : 1
+            });
         }
         else{
-            degrees = -(-currentMousePos.x+500)*(1/5);*/
-
-        var x = data.coords.x;
-        var ratio = 9/25;
-
-        x = x*ratio;
-
-
-            if(data.coords.x > 500){
-                $pointer.css('left', (1000-data.coords.x)*(5/15)+320).css({
-                    'transform' : 'rotate('+(data.coords.x-500)*(1/5)+'deg)',
-                    'zoom' : 1
-                });
-            }
-            else{
-                $pointer.css('left', (-data.coords.x+1000)*(5/15)+320).css({
-                    'transform' : 'rotate('+(data.coords.x/10)+'deg)',
-                    'zoom' : 1
-                });
-            }
-
-
+            $pointer.css('left', (-data.coords.x+1000)*(5/15)+320).css({
+                'transform' : 'rotate('+(-(data.coords.x-500)*(1/5))+'deg)',
+                'zoom' : 1
+            });
+        }
 
     });
 
