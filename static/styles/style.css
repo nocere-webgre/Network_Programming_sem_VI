@@ -79,6 +79,42 @@ html, body {
   height: 100%;
   font-family: 'Lato', sans-serif; }
 
+.animated {
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both; }
+
+@-webkit-keyframes shake {
+  0%, 100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-10px, 0, 0); }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0); } }
+
+@keyframes shake {
+  0%, 100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-10px, 0, 0); }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0); } }
+
+.shake {
+  -webkit-animation-name: shake;
+  animation-name: shake; }
+
 .index {
   background: url('/static/images/index_bg.jpg') no-repeat;
   background-size: cover;
@@ -137,6 +173,24 @@ html, body {
     display: block; }
     .index .button-play:hover {
       background-position: 0 -70px; }
+  .index .steps.first-step {
+    display: none; }
+  .index .steps.second-step {
+    display: none; }
+  .index .error {
+    font-size: 25px;
+    color: #fff;
+    padding: 15px 15px 15px 75px;
+    background: rgba(0, 0, 0, 0.2); }
+    .index .error:before {
+      content: " ";
+      position: absolute;
+      width: 50px;
+      margin-left: -60px;
+      height: 50px;
+      background-image: url('/static/images/warning.png');
+      background-repeat: no-repeat;
+      background-size: contain; }
 
 .game {
   width: 100%;

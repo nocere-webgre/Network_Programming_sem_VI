@@ -72,4 +72,35 @@
       background-position: 0 -70px;
     }
   }
+
+  .steps {
+
+    &.first-step {
+      display: none;
+    }
+
+    &.second-step {
+      display: none;
+    }
+  }
+
+  .error {
+    font-size: 25px;
+    color: #fff;
+    padding: 15px 15px 15px 75px;
+    background: rgba(0,0,0,0.2);
+
+    &:before{
+      content: " ";
+      position: absolute;
+      width: 50px;
+      margin-left: -60px;
+      height: 50px;
+      background-image: url('/static/images/warning.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+  }
+
+
 }

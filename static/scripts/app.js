@@ -30,26 +30,61 @@ if($('.index').length > 0){
     });
 
 
-    //Check server
+    //check if server is avaliable && steps to start game
     var socket = io.connect('http://localhost:3000');
     var available = false;
-    // on connection to server, ask for user's name with an anonymous callback
+    var steps = {
+        name: $('#set-login'),
+        first: $('.first-step'),
+        second: $('.second-step'),
+        error: $('.error')
+    };
 
-    buttonPlay.click(function(e){
-        e.preventDefault();
+    buttonPlay.click(function(){
+
+
+        if(steps.name.val().length > 0){
+            steps.first.hide();
+            steps.second.show();
+        }
+        else {
+            steps.name.addClass('shake');
+
+            setTimeout(function () {
+                steps.name.removeClass('shake');
+            },500)
+        }
 
     });
 
     socket.on('available', function(players){
         available = true;
+        steps.first.show();
+        steps.error.hide();
+
         console.log(players);
+
+        $.each(players, function(key, value) {
+
+            if(key != "undefined"){
+                steps.second.children('ul').append(rooms({}));
+                console.log(key+" "+value);
+            }
+        });
+
     });
 
-    socket.io.on('connect_error', function(err) {
+    socket.io.on('connect_error', function() {
         available = false;
-        // handle server error here
+        steps.first.hide();
+        steps.second.hide();
+        steps.error.show();
         console.log('Error connecting to server - available: '+available);
     });
 
 }
+
+var rooms = _.template(
+    '<li>1</li>'
+);
 }(jQuery));
