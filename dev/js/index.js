@@ -62,12 +62,14 @@ if($('.index').length > 0){
         steps.error.hide();
 
         console.log(players);
+        var romms = 1;
 
         $.each(players, function(key, value) {
 
             if(key != "undefined"){
-                steps.second.children('ul').append(rooms({}));
+                steps.second.children('ul').append(rooms({nr: romms}));
                 console.log(key+" "+value);
+                rooms++;
             }
         });
 
