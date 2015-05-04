@@ -1,5 +1,6 @@
 <div class="board">
     <div id="my-racket"></div>
+    <div class="ball my"></div>
 </div>
 
 

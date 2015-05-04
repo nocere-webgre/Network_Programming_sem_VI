@@ -254,13 +254,14 @@ html, body {
   overflow: hidden; }
   .board #my-racket {
     position: absolute;
-    z-index: 3;
+    z-index: 4;
     top: 290px;
     left: 444px;
     background-image: url(/static/images/sprite.png);
     background-position: 0px 0px;
     width: 112px;
-    height: 192px; }
+    height: 192px;
+    opacity: 0.6; }
 
 .pointer {
   position: absolute;
@@ -270,6 +271,20 @@ html, body {
   background-position: -179px -86px;
   width: 34px;
   height: 57px; }
+
+.ball {
+  position: absolute;
+  z-index: 3;
+  /*@include sprite($ball); */
+  background: url('/dev/sprite/ball.png');
+  width: 30px;
+  height: 30px;
+  top: 350px;
+  -webkit-transition: 1000ms;
+  transition: 1000ms; }
+  .ball.my {
+    -webkit-transition: 0ms;
+    transition: 0ms; }
 
 .rooms {
   background: #67aac5;

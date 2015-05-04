@@ -50,6 +50,10 @@
                 'left': (event.pageX-myracket.width()/2)+'px',
                 'transform': 'rotate('+deg+'deg)'
             });
+
+            $('.my').css({
+                'left': (event.pageX-15)+'px'
+            });
         }
     });
 
@@ -57,6 +61,7 @@
         if($('.pointer[session_id="'+data.session_id+'"]').length <= 0 && ($('.pointer').length) < 1){
             $('body').append('<div class="pointer" session_id="'+data.session_id+'"></div>')
         }
+
         var $pointer = $('.pointer[session_id="'+data.session_id+'"]');
 
         if(data.coords.x > 500){

@@ -8,10 +8,11 @@
 
   #my-racket {
     position: absolute;
-    z-index: 3;
+    z-index: 4;
     top: 290px;
     left: 444px;
     @include sprite($my-racket);
+    opacity: 0.6;
   }
 }
 
@@ -22,3 +23,19 @@
   @include sprite($opponent-racket);
 }
 
+.ball {
+  position: absolute;
+  z-index: 3;
+  /*@include sprite($ball); */
+  background: url('/dev/sprite/ball.png');
+  width: 30px;
+  height: 30px;
+  top: 350px;
+  -webkit-transition: 1000ms;
+  transition: 1000ms;
+
+  &.my {
+    -webkit-transition: 0ms;
+    transition: 0ms;
+  }
+}
