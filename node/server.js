@@ -84,7 +84,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('mouse_activity', function(data) {
        console.log(data);
-        socket.broadcast.emit('all_mouse_activity', {session_id: socket.id, coords: data});
+        socket.broadcast.to(socket.room).emit('all_mouse_activity', {session_id: socket.id, coords: data});
     });
 
 	// when the user disconnects.. perform this
