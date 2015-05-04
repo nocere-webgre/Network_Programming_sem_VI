@@ -4,7 +4,7 @@
     // on connection to server, ask for user's name with an anonymous callback
     socket.on('connect', function(){
         // call the server-side function 'adduser' and send one parameter (value of prompt)
-        socket.emit('adduser', '<?php echo $_COOKIE['login']; ?>');
+        socket.emit('adduser', '<?php echo $_COOKIE['login']; ?>', '<?php echo $_COOKIE['room-number']; ?>');
     });
 
     // listener, whenever the server emits 'updatechat', this updates the chat body
@@ -54,10 +54,9 @@
     });
 
     socket.on('all_mouse_activity',function(data){
-        if($('.pointer[session_id="'+data.session_id+'"]').length <= 0){
+        if($('.pointer[session_id="'+data.session_id+'"]').length <= 0 && ($('.pointer').length) < 1){
             $('body').append('<div class="pointer" session_id="'+data.session_id+'"></div>')
         }
-
         var $pointer = $('.pointer[session_id="'+data.session_id+'"]');
 
         if(data.coords.x > 500){
@@ -73,6 +72,16 @@
             });
         }
 
+    });
+
+    socket.on('deleterocket', function(id){
+        var $pointer = $('.pointer[session_id="'+id+'"]');
+        $pointer.remove();
+    });
+
+    socket.io.on('connect_error', function() {
+        location.reload();
+        console.log('Error connecting to server - available: '+available);
     });
 
     function switchRoom(room){

@@ -16,8 +16,9 @@ if($('.index').length > 0){
     var src2  = document.createElement("source");
     src2.type = "audio/mpeg";
     src2.src  = "/static/sounds/index.mp3";
-    snd2.appendChild(src2);
-    snd2.volume = 0.05;
+    snd2.appendChild(src2);/*
+    snd2.volume = 0.05;*/
+    snd2.volume = 0.0;
 
     snd2.addEventListener('ended', function() {
         this.currentTime = 0;
@@ -29,6 +30,17 @@ if($('.index').length > 0){
         snd1.play();
     });
 
+    $('ul').on({
+        mouseenter: function () {
+            snd1.play();
+        },
+        click: function(){
+
+            $('#room-number').val($(this).attr('data-join'));
+            $('#start-game').submit();
+
+        }
+    }, '.join-to-game');
 
     //check if server is avaliable && steps to start game
     var socket = io.connect('http://localhost:3000');
@@ -41,7 +53,6 @@ if($('.index').length > 0){
     };
 
     buttonPlay.click(function(){
-
 
         if(steps.name.val().length > 0){
             steps.first.hide();
@@ -58,17 +69,23 @@ if($('.index').length > 0){
     });
 
     socket.on('available', function(players){
-        available = true;
-        steps.first.show();
-        steps.error.hide();
+        if(available == false){
+            available = true;
+            steps.first.show();
+            steps.error.hide();
+        }
+
+        steps.second.children('ul').empty();
 
         console.log(players);
+        var CountRomms = 1;
 
         $.each(players, function(key, value) {
 
             if(key != "undefined"){
-                steps.second.children('ul').append(rooms({}));
-                console.log(key+" "+value);
+                steps.second.children('ul').append(rooms({nr: CountRomms, key: key, players: value}));
+                //console.log(key+" "+value);
+                CountRomms++;
             }
         });
 
@@ -82,9 +99,16 @@ if($('.index').length > 0){
         console.log('Error connecting to server - available: '+available);
     });
 
+
+
 }
 
 var rooms = _.template(
-    '<li>1</li>'
+    '<li>' +
+        '<div class="rackets <% if (players == 1) { %>one-player<% } if (players > 1 ) { %>full<% } %>"></div>' +
+        '<div class="btn <% if (players < 2) { %>join-to-game<% } %>" data-join="<%- key %>">' +
+            '<div></div>' +
+        '</div>' +
+    '</li>'
 );
 }(jQuery));

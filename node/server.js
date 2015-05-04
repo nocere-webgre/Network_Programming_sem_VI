@@ -22,31 +22,34 @@ io.sockets.on('connection', function (socket) {
     socket.emit('available', players);
 
 	// when the client emits 'adduser', this listens and executes
-	socket.on('adduser', function(username){
+	socket.on('adduser', function(username, nrRoom){
 
-        console.log(players['room1']);
+        console.log(players[nrRoom]);
 		// store the username in the socket session for this client
 		socket.username = username;
 		// store the room name in the socket session for this client
-		socket.room = 'room1';
+		socket.room = nrRoom;
 		// add the client's username to the global list
         usernames[username] = {
             'username': username,
             'id' : socket.id,
-            'room': 'room1'
+            'nrroom': nrRoom
         };
 
-        players['room1'] = players['room1']+1;
+        players[nrRoom] = players[nrRoom]+1;
 		// send client to room 1
-		socket.join('room1');
+		socket.join(nrRoom);
 		// wyslanie wiadomosc do osoby ktora sie polaczyla
-		socket.emit('updatechat', 'SERVER', 'you have connected to room1');
+		socket.emit('updatechat', 'SERVER', 'you have connected to '+nrRoom);
 		// wyslanie wiadomosc do wszystkich po za osoba ktora sie polaczyla
-		socket.broadcast.to('room1').emit('updatechat', 'SERVER', username + ' has connected to this room');
-		socket.emit('updaterooms', rooms, 'room1');
+		socket.broadcast.to(nrRoom).emit('updatechat', 'SERVER', username + ' has connected to this room');
+		socket.emit('updaterooms', rooms, nrRoom);
 
         socket.emit('updatecount', usernames, players);
         socket.broadcast.emit('updatecount', usernames, players);
+
+        //send to index
+        socket.broadcast.emit('available', players);
 	});
 	
 	// when the client emits 'sendchat', this listens and executes
@@ -74,6 +77,9 @@ io.sockets.on('connection', function (socket) {
 
         socket.emit('updatecount', usernames, players);
         socket.broadcast.emit('updatecount', usernames, players);
+
+        //send to index
+        socket.broadcast.emit('available', players);
 	});
 
     socket.on('mouse_activity', function(data) {
@@ -83,6 +89,9 @@ io.sockets.on('connection', function (socket) {
 
 	// when the user disconnects.. perform this
 	socket.on('disconnect', function(){
+        console.log(socket.id);
+        socket.broadcast.emit('deleterocket', socket.id);
+
 		// remove the username from global usernames list
 		delete usernames[socket.username];
         players[socket.room] = players[socket.room]-1;
@@ -93,6 +102,9 @@ io.sockets.on('connection', function (socket) {
 		socket.leave(socket.room);
 
         socket.emit('updatecount', usernames, players);
+        socket.broadcast.emit('available', players);
+
+
         socket.broadcast.emit('updatecount', usernames, players);
 	});
 });

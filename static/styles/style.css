@@ -177,6 +177,54 @@ html, body {
     display: none; }
   .index .steps.second-step {
     display: none; }
+    .index .steps.second-step h2 {
+      line-height: 35px;
+      font-size: 35px;
+      color: #fff;
+      padding: 20px 0; }
+    .index .steps.second-step ul {
+      background: rgba(0, 0, 0, 0.2);
+      height: 145px; }
+      .index .steps.second-step ul li {
+        float: left;
+        padding: 0 8px; }
+        .index .steps.second-step ul li .rackets {
+          width: 104px;
+          height: 108px;
+          padding: 9px; }
+          .index .steps.second-step ul li .rackets.one-player:before {
+            content: " ";
+            position: absolute;
+            background-image: url(/static/images/sprite.png);
+            background-position: -112px -86px;
+            width: 67px;
+            height: 86px;
+            margin-left: 26px; }
+          .index .steps.second-step ul li .rackets.full:before {
+            content: " ";
+            position: absolute;
+            background-image: url(/static/images/sprite.png);
+            background-position: -112px 0px;
+            width: 104px;
+            height: 86px; }
+        .index .steps.second-step ul li .btn {
+          width: 121px;
+          height: 29px;
+          overflow: hidden; }
+          .index .steps.second-step ul li .btn div {
+            background-image: url(/static/images/sprite.png);
+            background-position: -216px 0px;
+            width: 121px;
+            height: 29px; }
+          .index .steps.second-step ul li .btn.join-to-game div {
+            margin-top: -29px;
+            background-image: url(/static/images/sprite.png);
+            background-position: 0px -192px;
+            width: 121px;
+            height: 58px; }
+          .index .steps.second-step ul li .btn.join-to-game:hover div {
+            margin-top: 0;
+            cursor: pointer; }
   .index .error {
     font-size: 25px;
     color: #fff;

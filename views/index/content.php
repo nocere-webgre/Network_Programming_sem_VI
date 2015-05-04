@@ -3,19 +3,23 @@
         <div class="logo"></div>
 
         <div class="error">
-            Serwer jest niedostępny. Proszę spróbować później.
+            The server is not available. Please try again later.
         </div>
 
-        <div class="steps first-step">
-            <div class="type-login">
-                <input type="text" name="set-login" id="set-login" class="animated" placeholder="Type your nick...">
+        <form action="/" method="post" id="start-game">
+            <div class="steps first-step">
+                <div class="type-login">
+                    <input type="text" name="set-login" id="set-login" class="animated" placeholder="Type your nick...">
+                </div>
+                <div class="button-play"></div>
             </div>
-            <button class="button-play"></button>
-        </div>
 
-        <div class="steps second-step">
-            <ul></ul>
-        </div>
+            <div class="steps second-step">
+                <input type="hidden" id="room-number" name="room-number">
+                <h2>Select the room:</h2>
+                <ul></ul>
+            </div>
+        </form>
 
     </div>
 </div>

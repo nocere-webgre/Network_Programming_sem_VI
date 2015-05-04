@@ -81,6 +81,71 @@
 
     &.second-step {
       display: none;
+
+      h2 {
+        line-height: 35px;
+        font-size: 35px;
+        color: #fff;
+        padding: 20px 0;
+      }
+
+      ul {
+        background: rgba(0,0,0,0.2);
+        height: 145px;
+
+        li {
+          float: left;
+          padding: 0 8px;
+
+          .rackets {
+            width: 104px;
+            height: 108px;
+            padding: 9px;
+
+            &.one-player {
+              &:before {
+                content: " ";
+                position: absolute;
+                @include sprite($one-player);
+                margin-left: 26px;
+              }
+            }
+
+            &.full {
+              &:before {
+                content: " ";
+                position: absolute;
+                @include sprite($full);
+              }
+            }
+          }
+
+          .btn {
+            width: 121px;
+            height: 29px;
+            overflow: hidden;
+
+            div {
+              @include sprite($btn-full);
+            }
+
+            &.join-to-game {
+
+              div {
+                margin-top: -29px;
+                @include sprite($btn-join);
+              }
+
+              &:hover {
+                div {
+                  margin-top: 0;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 
