@@ -5,6 +5,11 @@ var isStart = false;
 if(board.length > 0) {
     $("#conversation").animate({ scrollTop: $(document).height() }, "slow");
 
+
+
+
+
+
     board.click(function(e) {
 
         if(isStart == false) {
@@ -142,7 +147,7 @@ if($('.index').length > 0){
     }, '.join-to-game');
 
     //check if server is avaliable && steps to start game
-    var socket = io.connect('http://localhost:3000');
+    var socket = io.connect('http://37.233.103.234:3000/');
     var available = false;
     var steps = {
         name: $('#set-login'),

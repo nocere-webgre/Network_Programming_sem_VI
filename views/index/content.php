@@ -9,7 +9,7 @@
         <form action="/" method="post" id="start-game">
             <div class="steps first-step">
                 <div class="type-login">
-                    <input type="text" name="set-login" id="set-login" class="animated" placeholder="Type your nick...">
+                    <input type="text" autocomplete="off" name="set-login" id="set-login" class="animated" placeholder="Type your nick...">
                 </div>
                 <div class="button-play"></div>
             </div>

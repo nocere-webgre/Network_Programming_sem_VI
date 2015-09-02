@@ -1,5 +1,5 @@
 <script>
-    var socket = io.connect('http://localhost:3000');
+    var socket = io.connect('http://37.233.103.234:3000/');
 
     // on connection to server, ask for user's name with an anonymous callback
     socket.on('connect', function(){
@@ -18,17 +18,15 @@
         $('#rooms').empty();
         $.each(rooms, function(key, value) {
             if(value == current_room){
-                $('#rooms').append('<div class="current room-button">' + value + '</div>');
-            }
-            else {
-                $('#rooms').append('<div><a href="#" onclick="switchRoom(\''+value+'\')">' + value + '</a></div>');
+                $('#rooms').append('<div class="current room-button">You are connected to: ' + value + '</div>');
             }
         });
     });
 
-    socket.on('updatecount', function(usernames, rooms) {
+    socket.on('updatecount', function(usernames, rooms, playersID) {
         console.log(usernames);
         console.log(rooms);
+        console.log(playersID);
     });
 
     $(document).mousemove(function( event ){
@@ -59,7 +57,11 @@
 
     socket.on('all_mouse_activity',function(data){
         if($('.pointer[session_id="'+data.session_id+'"]').length <= 0 && ($('.pointer').length) < 1){
-            $('body').append('<div class="pointer" session_id="'+data.session_id+'"></div>')
+            $('body').append('<div class="pointer" session_id="'+data.session_id+'"></div>');
+
+            if(!$('.ball').length == 1){
+                $('.board').append('<div class="ball"></div>');
+            }
         }
 
         var $pointer = $('.pointer[session_id="'+data.session_id+'"]');

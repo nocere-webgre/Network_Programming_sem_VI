@@ -245,6 +245,10 @@ html, body {
   height: 100%;
   background: #000; }
 
+.room-button {
+  padding: 10px;
+  color: #fff; }
+
 .board {
   position: absolute;
   width: 1000px;

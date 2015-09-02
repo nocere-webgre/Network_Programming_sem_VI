@@ -14,11 +14,16 @@ var players = {
     'room2': 0,
     'room3': 0
 };
+var playersID = {
+    'room1': 0,
+    'room2': 0,
+    'room3': 0
+};
 // rooms which are currently available in chat
 var rooms = ['room1','room2','room3'];
 
 io.sockets.on('connection', function (socket) {
-
+    console.log('start');
     socket.emit('available', players);
 
 	// when the client emits 'adduser', this listens and executes
@@ -36,7 +41,6 @@ io.sockets.on('connection', function (socket) {
             'nrroom': nrRoom
         };
 
-        players[nrRoom] = players[nrRoom]+1;
 		// send client to room 1
 		socket.join(nrRoom);
 		// wyslanie wiadomosc do osoby ktora sie polaczyla
