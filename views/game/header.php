@@ -9,5 +9,5 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 </head>
 <body>
-<div class="game">
+<div class="game" data-login="<?= $login ?>" data-room="<?= $room; ?>">
 

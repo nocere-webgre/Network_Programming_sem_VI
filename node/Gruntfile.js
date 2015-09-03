@@ -13,7 +13,7 @@ module.exports = function(grunt) {
                     " ",
                     footer: "}(jQuery));"
                 },
-                src: [ '<%= staticPath  %>dev/js/*.js' ],
+                src: [ '<%= staticPath  %>dev/js/*.js', '<%= staticPath  %>dev/js/**/*.js' ],
                 dest: '<%= staticPath  %>static/scripts/app.js'
             },
 
@@ -73,7 +73,7 @@ module.exports = function(grunt) {
                 tasks: 'buildSass'
             },
             js: {
-                files: ['<%= staticPath  %>dev/js/*.js', '<%= staticPath  %>dev/js/libs/*.js'],
+                files: ['<%= staticPath  %>dev/js/*.js', '<%= staticPath  %>dev/js/game/*.js', '<%= staticPath  %>dev/js/index/*.js'],
                 tasks: ['buildJS']
             }
         }

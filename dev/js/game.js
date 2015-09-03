@@ -1,3 +1,4 @@
+/*
 var board = $('.board');
 var ball = $('.ball');
 var isStart = false;
@@ -52,7 +53,8 @@ function ballStart(start, ball, x) {
         };
     }
 
-   /* ball.css({
+   */
+/* ball.css({
 
         'top'                 : ballCss.start,
         '-webkit-transform' : 'scale(' + ballCss.startScale + ')',
@@ -60,7 +62,8 @@ function ballStart(start, ball, x) {
         '-ms-transform'     : 'scale(' + ballCss.startScale + ')',
         '-o-transform'      : 'scale(' + ballCss.startScale + ')',
         'transform'         : 'scale(' + ballCss.startScale + ')'
-    }) ;*/
+    }) ;*//*
+
 
     var x = 0;
     setInterval(function(){
@@ -97,3 +100,4 @@ function ballStart(start, ball, x) {
     },1000);
 
 }
+*/

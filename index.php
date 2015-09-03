@@ -13,9 +13,9 @@ if(!$logged){
 
 }
 else{
-
+    $login = $_POST['set-login'];
+    $room = $_POST['room-number'];
     require 'views/game/header.php';
-    require 'views/game/game.php';
     require 'views/game/board.php';
     require 'views/game/chat.php';
     require 'views/game/footer.php';

@@ -1,4 +1,4 @@
-<div class="rooms">
+<!--<div class="rooms">
     <div class="nag">Rooms</div>
     <div id="rooms"></div>
 </div>
@@ -10,4 +10,4 @@
         <input id="data" type="text" style="width:200px;" />
         <input type="button" id="datasend" value="send" />
     </div>
-</div>
+</div>-->
