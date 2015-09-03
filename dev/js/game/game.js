@@ -13,6 +13,63 @@ $(document).ready(function() {
             console.log('Error connecting to server - available: '+available);
         });
 
+        $(document).mousemove(function( event ){
+
+            var myracket = $('#my-racket');
+            var deg = 0;
+
+            if(event.pageX <= 1000){
+                socket.emit('mouse_activity', {x: event.pageX, y: event.pageY});
+
+                if(event.pageX < 500){
+                    deg = (event.pageX-500)*(1/5);
+                }
+                else if(event.pageX >= 500){
+                    deg = (event.pageX-500)*(1/5);
+                }
+
+                myracket.css({
+                    'left': (event.pageX-myracket.width()/2)+'px',
+                    'transform': 'rotate('+deg+'deg)'
+                });
+
+                $('.my').css({
+                    'left': (event.pageX-15)+'px'
+                });
+            }
+        });
+
+        socket.on('all_mouse_activity',function(data){
+            if($('.pointer[session_id="'+data.session_id+'"]').length <= 0 && ($('.pointer').length) < 1){
+                $('body').append('<div class="pointer" session_id="'+data.session_id+'"></div>');
+
+                if(!$('.ball').length == 1){
+                    $('.board').append('<div class="ball"></div>');
+                }
+            }
+
+            var $pointer = $('.pointer[session_id="'+data.session_id+'"]');
+
+            if(data.coords.x > 500){
+                $pointer.css('left', (1000-data.coords.x)*(5/15)+320).css({
+                    'transform' : 'rotate('+((-(data.coords.x+500)*(1/5))+180)+'deg)',
+                    'zoom' : 1
+                });
+            }
+            else{
+                $pointer.css('left', (-data.coords.x+1000)*(5/15)+320).css({
+                    'transform' : 'rotate('+(-(data.coords.x-500)*(1/5))+'deg)',
+                    'zoom' : 1
+                });
+            }
+
+        });
+
+        socket.on('deleterocket', function(id){
+            var $pointer = $('.pointer[session_id="'+id+'"]');
+            $pointer.remove();
+        });
+
     }
 
 });

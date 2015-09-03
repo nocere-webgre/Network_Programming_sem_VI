@@ -73,7 +73,7 @@ io.sockets.on('connection', function (socket) {
         console.log(users);
         roomsCount[socket.room] = roomsCount[socket.room]-1;
 
-        //socket.broadcast.emit('deleterocket', socket.id);
+        socket.broadcast.emit('deleterocket', socket.id);
 
         // remove the username from global usernames list
         //delete usernames[socket.username];
@@ -91,39 +91,9 @@ io.sockets.on('connection', function (socket) {
         //socket.broadcast.emit('updatecount', usernames, roomsCount);
     });
 
-	
-	// when the client emits 'sendchat', this listens and executes
-	socket.on('sendchat', function (data) {
-		// we tell the client to execute 'updatechat' with 2 parameters
-		io.sockets.in(socket.room).emit('updatechat', socket.username, data);
-	});
-	
-	socket.on('switchRoom', function(newroom){
-		socket.leave(socket.room);
-
-        roomsCount[socket.room] = roomsCount[socket.room]-1;
-        roomsCount[newroom] = roomsCount[newroom]+1;
-
-		socket.join(newroom);
-		socket.emit('updatechat', 'SERVER', 'you have connected to '+ newroom);
-		// sent message to OLD room
-		socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username+' has left this room');
-		// update socket session room title
-		socket.room = newroom;
-		socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username+' has joined this room');
-		socket.emit('updaterooms', rooms, newroom);
-
-        //usernames[socket.username]['room'] = newroom;
-
-        //socket.emit('updatecount', usernames, roomsCount);
-        //socket.broadcast.emit('updatecount', usernames, roomsCount);
-
-        //send to index
-        socket.broadcast.emit('available', roomsCount, online);
-	});
 
     socket.on('mouse_activity', function(data) {
-       console.log(data);
+       //console.log(data);
         socket.broadcast.to(socket.room).emit('all_mouse_activity', {session_id: socket.id, coords: data});
     });
 
