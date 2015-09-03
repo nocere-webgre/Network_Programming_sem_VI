@@ -80,8 +80,8 @@ html, body {
   font-family: 'Lato', sans-serif; }
 
 .animated {
-  -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s;
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both; }
 
@@ -121,6 +121,12 @@ html, body {
   background-position: center;
   height: 100%;
   width: 100%; }
+  .index .online-count {
+    position: absolute;
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    color: #fff; }
   .index .wrapper {
     width: 490px;
     padding-right: 490px;

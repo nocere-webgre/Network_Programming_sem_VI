@@ -28,7 +28,7 @@ module.exports = function(grunt) {
             }
         },
 
-        libsass: {
+        sass: {
             options: {
                 sourcemap: false,
                 style: 'expanded'
@@ -83,7 +83,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-spritesmith');
-    grunt.loadNpmTasks('grunt-libsass');
+    grunt.loadNpmTasks('grunt-sass');
 
     grunt.registerTask( 'buildJS', [
         'concat:app',
@@ -92,7 +92,7 @@ module.exports = function(grunt) {
     ] );
 
     grunt.registerTask('buildSass', [
-        'libsass'
+        'sass'
     ]);
 
     grunt.registerTask('buildSprite', [

@@ -9,6 +9,7 @@ server.listen(3000);
 
 // usernames which are currently connected to the chat
 var usernames = {};
+var online = 0;
 var players = {
     'room1': 0,
     'room2': 0,
@@ -23,8 +24,11 @@ var playersID = {
 var rooms = ['room1','room2','room3'];
 
 io.sockets.on('connection', function (socket) {
-    console.log('start');
-    socket.emit('available', players);
+    online++;
+    socket.broadcast.emit('users-online', online);
+
+    console.log('start - osób online: '+online);
+    socket.emit('available', players, online);
 
 	// when the client emits 'adduser', this listens and executes
 	socket.on('adduser', function(username, nrRoom){
@@ -53,7 +57,7 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.emit('updatecount', usernames, players);
 
         //send to index
-        socket.broadcast.emit('available', players);
+        socket.broadcast.emit('available', players, online);
 	});
 	
 	// when the client emits 'sendchat', this listens and executes
@@ -83,7 +87,7 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.emit('updatecount', usernames, players);
 
         //send to index
-        socket.broadcast.emit('available', players);
+        socket.broadcast.emit('available', players, online);
 	});
 
     socket.on('mouse_activity', function(data) {
@@ -94,6 +98,9 @@ io.sockets.on('connection', function (socket) {
 	// when the user disconnects.. perform this
 	socket.on('disconnect', function(){
         console.log(socket.id);
+        online--;
+        socket.broadcast.emit('users-online', online);
+
         socket.broadcast.emit('deleterocket', socket.id);
 
 		// remove the username from global usernames list
@@ -106,7 +113,7 @@ io.sockets.on('connection', function (socket) {
 		socket.leave(socket.room);
 
         socket.emit('updatecount', usernames, players);
-        socket.broadcast.emit('available', players);
+        socket.broadcast.emit('available', players, online);
 
 
         socket.broadcast.emit('updatecount', usernames, players);

@@ -1,3 +1,4 @@
+<div class="online-count">Users online: <span></span></div>
 <div class="wrapper">
     <div class="span6">
         <div class="logo"></div>
