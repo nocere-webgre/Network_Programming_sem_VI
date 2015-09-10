@@ -6,23 +6,14 @@ var express = require('express')
 
 server.listen(3000);
 
-
-// usernames which are currently connected to the chat
-//var usernames = {};
 var online = 0;
-var playersID = {
-    'room1': 0,
-    'room2': 0,
-    'room3': 0
-};
-
-// rooms which are currently available in chat
 var rooms = ['room1','room2','room3'];
 var roomsCount = {
     'room1': 0,
     'room2': 0,
     'room3': 0
 };
+var roomsDetails = [];
 var users = [];
 
 io.sockets.on('connection', function (socket) {
@@ -47,15 +38,6 @@ io.sockets.on('connection', function (socket) {
 		// send client to room 1
 		socket.join(nrRoom);
 
-		// wyslanie wiadomosc do osoby ktora sie polaczyla
-		//socket.emit('updatechat', 'SERVER', 'you have connected to '+nrRoom);
-		// wyslanie wiadomosc do wszystkich po za osoba ktora sie polaczyla
-		//socket.broadcast.to(nrRoom).emit('updatechat', 'SERVER', username + ' has connected to this room');
-		//socket.emit('updaterooms', rooms, nrRoom);
-
-        //socket.emit('updatecount', usernames, roomsCount);
-        //socket.broadcast.emit('updatecount', usernames, roomsCount);
-
         //send to index
         socket.broadcast.emit('available', roomsCount, online);
 	});
@@ -72,23 +54,10 @@ io.sockets.on('connection', function (socket) {
         delete users[socket.username];
         console.log(users);
         roomsCount[socket.room] = roomsCount[socket.room]-1;
-
         socket.broadcast.emit('deleterocket', socket.id);
-
-        // remove the username from global usernames list
-        //delete usernames[socket.username];
-        // update list of users in chat, client-side
-        //io.sockets.emit('updateusers', usernames);
-        // echo globally that this client has left
-        //socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
         socket.leave(socket.room);
-
-        //socket.emit('updatecount', usernames, roomsCount);
         socket.broadcast.emit('available', roomsCount, online);
 
-        //console.log(usernames);
-
-        //socket.broadcast.emit('updatecount', usernames, roomsCount);
     });
 
 
@@ -99,3 +68,4 @@ io.sockets.on('connection', function (socket) {
 
 
 });
+

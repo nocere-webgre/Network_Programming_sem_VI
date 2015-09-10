@@ -127,7 +127,8 @@ $(document).ready(function() {
     if(game.length > 0){
 
         socket.on('connect', function(){
-            console.log('Zostałeś połączony jako: '+game.attr('data-login')+' do pokoju: '+game.attr('data-room'))
+            console.log('Zostałeś połączony jako: '+game.attr('data-login')+' do pokoju: '+game.attr('data-room'));
+
             socket.emit('adduser', game.attr('data-login'), game.attr('data-room'));
         });
 
@@ -168,6 +169,7 @@ $(document).ready(function() {
 
                 if(!$('.ball').length == 1){
                     $('.board').append('<div class="ball"></div>');
+                    //alert('odliczanie');
                 }
             }
 

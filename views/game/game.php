@@ -1,10 +1,10 @@
-<script>
+<!--<script>
     var socket = io.connect('http://37.233.103.234:3000/');
 
     // on connection to server, ask for user's name with an anonymous callback
     socket.on('connect', function(){
         // call the server-side function 'adduser' and send one parameter (value of prompt)
-        socket.emit('adduser', '<?php echo $_COOKIE['login']; ?>', '<?php echo $_COOKIE['room-number']; ?>');
+        socket.emit('adduser', '<?php /*echo $_COOKIE['login']; */?>', '<?php /*echo $_COOKIE['room-number']; */?>');
     });
 
     // listener, whenever the server emits 'updatechat', this updates the chat body
@@ -114,4 +114,4 @@
         });
     });
 
-</script>
+</script>-->
