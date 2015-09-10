@@ -257,6 +257,7 @@ html, body {
 
 .board {
   position: absolute;
+  z-index: 2;
   width: 1000px;
   height: 563px;
   cursor: none;
@@ -295,6 +296,24 @@ html, body {
   .ball.my {
     -webkit-transition: 0ms;
     transition: 0ms; }
+
+#results {
+  position: absolute;
+  z-index: 3;
+  width: 1000px;
+  height: 72px;
+  background: #4281a2; }
+  #results > div {
+    float: left;
+    font-size: 20px;
+    line-height: 20px;
+    white-space: nowrap;
+    padding: 26px; }
+    #results > div.score {
+      font-weight: bold; }
+    #results > div > span {
+      font-size: 11px;
+      opacity: .5; }
 
 .rooms {
   background: #67aac5;

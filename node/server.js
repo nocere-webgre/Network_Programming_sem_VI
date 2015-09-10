@@ -30,13 +30,19 @@ io.sockets.on('connection', function (socket) {
         socket.room = nrRoom;
         users[socket.username] ={
             'name' : socket.username,
-            'room' : socket.room
+            'room' : socket.room,
+            'id': socket.id
         };
-        console.log(users);
         roomsCount[socket.room] = roomsCount[socket.room]+1;
 
-		// send client to room 1
+		// send client to room X
 		socket.join(nrRoom);
+
+
+        if(roomsCount[socket.room] > 1) {
+            console.log(users);
+            socket.emit('ready-to-play', users[socket.username]);
+        }
 
         //send to index
         socket.broadcast.emit('available', roomsCount, online);
@@ -44,7 +50,7 @@ io.sockets.on('connection', function (socket) {
 
     // when the user disconnects.. perform this
     socket.on('disconnect', function(){
-        console.log('SOCKET username: '+socket.username);
+        //console.log('SOCKET username: '+socket.username);
 
         //Zmniejszenie licznika online
         online--;
@@ -52,7 +58,7 @@ io.sockets.on('connection', function (socket) {
 
         //Usunięcie
         delete users[socket.username];
-        console.log(users);
+        //console.log(users);
         roomsCount[socket.room] = roomsCount[socket.room]-1;
         socket.broadcast.emit('deleterocket', socket.id);
         socket.leave(socket.room);
@@ -60,12 +66,24 @@ io.sockets.on('connection', function (socket) {
 
     });
 
-
     socket.on('mouse_activity', function(data) {
        //console.log(data);
         socket.broadcast.to(socket.room).emit('all_mouse_activity', {session_id: socket.id, coords: data});
     });
 
+    socket.on('to_user', function(data) {
+        console.log(data);
+        var players = {
+            'first_name': data.name,
+            'first_id': data.id,
+            'first_score': 0,
+            'second_name': socket.username,
+            'second_score': 0,
+            'second_id': socket.id
+        };
+        socket.emit('from-second-player', players);
+        socket.broadcast.to( data.room ).emit('from-second-player', players);
+    });
 
 });
 

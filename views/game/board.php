@@ -1,8 +1,13 @@
 <div class="board" >
     <div id="my-racket"></div>
-
 </div>
-
+<div id="results">
+    <div class="first-name">-</div>
+    <div class="first-score score">0</div>
+    <div>vs</div>
+    <div class="second-score score">0</div>
+    <div class="second-name">-</div>
+</div>
 
 <!--
 <div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">

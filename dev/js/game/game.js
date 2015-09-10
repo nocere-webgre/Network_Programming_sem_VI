@@ -5,7 +5,6 @@ $(document).ready(function() {
 
         socket.on('connect', function(){
             console.log('Zostałeś połączony jako: '+game.attr('data-login')+' do pokoju: '+game.attr('data-room'));
-
             socket.emit('adduser', game.attr('data-login'), game.attr('data-room'));
         });
 
@@ -45,7 +44,7 @@ $(document).ready(function() {
                 $('body').append('<div class="pointer" session_id="'+data.session_id+'"></div>');
 
                 if(!$('.ball').length == 1){
-                    $('.board').append('<div class="ball"></div>');
+                    //$('.board').append('<div class="ball"></div>');
                     //alert('odliczanie');
                 }
             }
@@ -71,6 +70,20 @@ $(document).ready(function() {
             var $pointer = $('.pointer[session_id="'+id+'"]');
             $pointer.remove();
         });
+
+        socket.on('ready-to-play', function(users) {
+            console.log('jesteś gotowy?');
+            socket.emit('to_user', users);
+        });
+
+        socket.on('from-second-player', function(users) {
+            console.log(users);
+            $('#results .first-name').html(users.first_name+" <span>("+users.first_id+")</span>");
+            $('#results .first-score').html(users.first_score);
+            $('#results .second-name').html(users.second_name+" <span>("+users.second_id+")</span>");
+            $('#results .second-score').html(users.second_score);
+        });
+
 
     }
 
