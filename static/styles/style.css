@@ -263,16 +263,17 @@ html, body {
   cursor: none;
   background: url('/static/images/board.jpg') no-repeat;
   overflow: hidden; }
-  .board #my-racket {
-    position: absolute;
-    z-index: 4;
-    top: 290px;
-    left: 444px;
-    background-image: url(/static/images/sprite.png);
-    background-position: -200px -200px;
-    width: 112px;
-    height: 192px;
-    opacity: 0.6; }
+
+#my-racket {
+  position: absolute;
+  z-index: 5;
+  top: 290px;
+  left: 444px;
+  background-image: url(/static/images/sprite.png);
+  background-position: -200px -200px;
+  width: 112px;
+  height: 192px;
+  opacity: 0.6; }
 
 .pointer {
   position: absolute;
@@ -285,7 +286,7 @@ html, body {
 
 .ball {
   position: absolute;
-  z-index: 3;
+  z-index: 4;
   /*@include sprite($ball); */
   background: url('/dev/sprite/ball.png');
   width: 30px;
@@ -296,6 +297,16 @@ html, body {
   .ball.my {
     -webkit-transition: 0ms;
     transition: 0ms; }
+  .ball.opp {
+    top: 185px;
+    -webkit-transform: scale(0.5);
+    -moz-transform: scale(0.5);
+    -ms-transform: scale(0.5);
+    -o-transform: scale(0.5);
+    transform: scale(0.5);
+    -webkit-transition: 0ms;
+    transition: 0ms;
+    z-index: 10; }
 
 #results {
   position: absolute;

@@ -1,6 +1,4 @@
-<div class="board" >
-    <div id="my-racket"></div>
-</div>
+<div class="board"></div>
 <div id="results">
     <div class="first-name">-</div>
     <div class="first-score score">0</div>

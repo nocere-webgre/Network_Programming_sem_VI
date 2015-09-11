@@ -124,6 +124,8 @@ var rooms = _.template(
 $(document).ready(function() {
     var game = $('.game');
     var startGame = false;
+    var ballInMove = false;
+
     if(game.length > 0){
 
         socket.on('connect', function(){
@@ -162,33 +164,6 @@ $(document).ready(function() {
             }
         });
 
-        socket.on('all_mouse_activity',function(data){
-            if($('.pointer[session_id="'+data.session_id+'"]').length <= 0 && ($('.pointer').length) < 1){
-                $('body').append('<div class="pointer" session_id="'+data.session_id+'"></div>');
-
-                if(!$('.ball').length == 1){
-                    //$('.board').append('<div class="ball"></div>');
-                    //alert('odliczanie');
-                }
-            }
-
-            var $pointer = $('.pointer[session_id="'+data.session_id+'"]');
-
-            if(data.coords.x > 500){
-                $pointer.css('left', (1000-data.coords.x)*(5/15)+320).css({
-                    'transform' : 'rotate('+((-(data.coords.x+500)*(1/5))+180)+'deg)',
-                    'zoom' : 1
-                });
-            }
-            else{
-                $pointer.css('left', (-data.coords.x+1000)*(5/15)+320).css({
-                    'transform' : 'rotate('+(-(data.coords.x-500)*(1/5))+'deg)',
-                    'zoom' : 1
-                });
-            }
-
-        });
-
         socket.on('deleterocket', function(id){
             var $pointer = $('.pointer[session_id="'+id+'"]');
             $pointer.remove();
@@ -200,6 +175,21 @@ $(document).ready(function() {
         });
 
         socket.on('from-second-player', function(users) {
+
+            var yourUsername = $('.game').attr('data-login');
+            var opponetId = null;
+
+            if(yourUsername == users[0][0]) {
+                opponetId = users[1][1];
+            }
+            else if(yourUsername == users[1][0]) {
+                opponetId = users[0][1];
+            }
+
+            if($('.pointer[session_id="'+opponetId+'"]').length <= 0 && ($('.pointer').length) < 1){
+                $('body').append('<div class="pointer" session_id="'+opponetId+'"></div>');
+            }
+
             //console.log(users);
             $('#results .first-name').html(users[0][0]+" <span>("+users[0][1]+")</span>");
             $('#results .first-score').html(0);
@@ -221,10 +211,47 @@ $(document).ready(function() {
                         setTimeout(function() {
                             $('.counter').hide();
                             console.log('Gre rozpocznie gracz: '+users[0][0]);
+;
+                            if($('.pointer[session_id="'+users[0][1]+'"]').length <= 0 && ($('.pointer').length) == 1 && !ballInMove){
+                                $('body').append('<div class="ball opp"></div>');
+                                console.log('pilka dla przeciwnika');
+                            }
+                            else if(!ballInMove){
+                                $('body').append('<div class="ball my"></div>');
+                                console.log('pilka dla Ciebie');
+                            }
+
                         }, 1000);
                     }
                 }, 1000);
             }
+        });
+
+        socket.on('all_mouse_activity',function(data){
+
+            var $pointer = $('.pointer[session_id="'+data.session_id+'"]');
+
+            if(data.coords.x > 500){
+                $pointer.css('left', (1000-data.coords.x)*(5/15)+320).css({
+                    'transform' : 'rotate('+((-(data.coords.x+500)*(1/5))+180)+'deg)',
+                    'zoom' : 1
+                });
+
+                $('.opp').css({
+                    'left': (1000-data.coords.x)*(5/15)+320+'px'
+                });
+            }
+            else{
+                $pointer.css('left', (-data.coords.x+1000)*(5/15)+320).css({
+                    'transform' : 'rotate('+(-(data.coords.x-500)*(1/5))+'deg)',
+                    'zoom' : 1
+                });
+
+                $('.opp').css({
+                    'left': (-data.coords.x+1000)*(5/15)+320+'px'
+                });
+            }
+
         });
 
         socket.on('player-leave', function(name) {
