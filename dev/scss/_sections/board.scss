@@ -48,3 +48,25 @@
     > span { font-size: 11px; opacity: .5}
   }
 }
+
+.counter { width: 200px; height: 200px; position: absolute; z-index: 4; top: 170px; left: 400px; display: none; text-align: center;
+  .count-3 { @include sprite($count_3); background-size: contain; background-image: url('/static/images/count_3.png'); margin: 0 auto;
+    background-position: center; animation-name: example; animation-duration: 1s; display: none;
+    &.show { display: block; }
+  }
+  .count-2 { @include sprite($count_2);  background-size: contain; background-image: url('/static/images/count_2.png'); margin: 0 auto;
+    background-position: center; animation-name: example; animation-duration: 1s; display: none;
+    &.show { display: block; }
+  }
+  .count-1 { @include sprite($count_1); background-size: contain; background-image: url('/static/images/count_1.png'); margin: 0 auto;
+    background-position: center; animation-name: example; animation-duration: 1s; display: none;
+    &.show { display: block; }
+  }
+}
+
+@keyframes example {
+  0%   { width: 40px; height: 40px; }
+  100% { width: 200px; height: 200px; }
+}
+
+/* The element to apply the animation to */

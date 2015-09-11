@@ -14,6 +14,9 @@ var roomsCount = {
     'room3': 0
 };
 var roomsDetails = [];
+    roomsDetails['room1'] = [];
+    roomsDetails['room2'] = [];
+    roomsDetails['room3'] = [];
 var users = [];
 
 io.sockets.on('connection', function (socket) {
@@ -28,11 +31,15 @@ io.sockets.on('connection', function (socket) {
 
         socket.username = username;
         socket.room = nrRoom;
-        users[socket.username] ={
+        users[socket.username] = {
             'name' : socket.username,
             'room' : socket.room,
             'id': socket.id
         };
+        roomsDetails[socket.room][socket.username] = [];
+        roomsDetails[socket.room][socket.username][0] = socket.username;
+        roomsDetails[socket.room][socket.username][1] = socket.id;
+
         roomsCount[socket.room] = roomsCount[socket.room]+1;
 
 		// send client to room X
@@ -40,7 +47,7 @@ io.sockets.on('connection', function (socket) {
 
 
         if(roomsCount[socket.room] > 1) {
-            console.log(users);
+            //console.log(users);
             socket.emit('ready-to-play', users[socket.username]);
         }
 
@@ -50,14 +57,20 @@ io.sockets.on('connection', function (socket) {
 
     // when the user disconnects.. perform this
     socket.on('disconnect', function(){
-        //console.log('SOCKET username: '+socket.username);
 
         //Zmniejszenie licznika online
         online--;
         socket.broadcast.emit('users-online', online, roomsCount);
 
         //Usunięcie
-        delete users[socket.username];
+        try {
+            delete users[socket.username];
+            delete roomsDetails[socket.room][socket.username];
+            socket.broadcast.to( socket.room ).emit('player-leave', socket.username);
+        } catch(e) {
+            console.log(e);
+        }
+
         //console.log(users);
         roomsCount[socket.room] = roomsCount[socket.room]-1;
         socket.broadcast.emit('deleterocket', socket.id);
@@ -72,18 +85,21 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('to_user', function(data) {
-        console.log(data);
-        var players = {
-            'first_name': data.name,
-            'first_id': data.id,
-            'first_score': 0,
-            'second_name': socket.username,
-            'second_score': 0,
-            'second_id': socket.id
-        };
-        socket.emit('from-second-player', players);
-        socket.broadcast.to( data.room ).emit('from-second-player', players);
+        //console.log(data);
+
+        console.log('GRACZE '+socket.room);
+        var players = roomsDetails[socket.room];
+        console.log(players);
+        socket.emit('from-second-player', getPlayers(players));
+        socket.broadcast.to( data.room ).emit('from-second-player', getPlayers(players));
     });
 
 });
 
+function getPlayers(players) {
+    var numeric_array = [];
+    for ( var item in players ){
+        numeric_array.push( players[ item ] );
+    }
+    return numeric_array;
+}

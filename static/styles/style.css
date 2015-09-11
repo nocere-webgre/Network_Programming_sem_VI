@@ -202,7 +202,7 @@ html, body {
             content: " ";
             position: absolute;
             background-image: url(/static/images/sprite.png);
-            background-position: -112px -86px;
+            background-position: 0px -400px;
             width: 67px;
             height: 86px;
             margin-left: 26px; }
@@ -210,7 +210,7 @@ html, body {
             content: " ";
             position: absolute;
             background-image: url(/static/images/sprite.png);
-            background-position: -112px 0px;
+            background-position: -312px -200px;
             width: 104px;
             height: 86px; }
         .index .steps.second-step ul li .btn {
@@ -219,13 +219,13 @@ html, body {
           overflow: hidden; }
           .index .steps.second-step ul li .btn div {
             background-image: url(/static/images/sprite.png);
-            background-position: -216px 0px;
+            background-position: -97px -400px;
             width: 121px;
             height: 29px; }
           .index .steps.second-step ul li .btn.join-to-game div {
             margin-top: -29px;
             background-image: url(/static/images/sprite.png);
-            background-position: 0px -192px;
+            background-position: -400px 0px;
             width: 121px;
             height: 58px; }
           .index .steps.second-step ul li .btn.join-to-game:hover div {
@@ -269,7 +269,7 @@ html, body {
     top: 290px;
     left: 444px;
     background-image: url(/static/images/sprite.png);
-    background-position: 0px 0px;
+    background-position: -200px -200px;
     width: 112px;
     height: 192px;
     opacity: 0.6; }
@@ -279,7 +279,7 @@ html, body {
   z-index: 3;
   top: 180px;
   background-image: url(/static/images/sprite.png);
-  background-position: -179px -86px;
+  background-position: -400px -58px;
   width: 34px;
   height: 57px; }
 
@@ -315,6 +315,68 @@ html, body {
       font-size: 11px;
       opacity: .5; }
 
+.counter {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  z-index: 4;
+  top: 170px;
+  left: 400px;
+  display: none;
+  text-align: center; }
+  .counter .count-3 {
+    background-image: url(/static/images/sprite.png);
+    background-position: 0px -200px;
+    width: 200px;
+    height: 200px;
+    background-size: contain;
+    background-image: url('/static/images/count_3.png');
+    margin: 0 auto;
+    background-position: center;
+    animation-name: example;
+    animation-duration: 1s;
+    display: none; }
+    .counter .count-3.show {
+      display: block; }
+  .counter .count-2 {
+    background-image: url(/static/images/sprite.png);
+    background-position: -200px 0px;
+    width: 200px;
+    height: 200px;
+    background-size: contain;
+    background-image: url('/static/images/count_2.png');
+    margin: 0 auto;
+    background-position: center;
+    animation-name: example;
+    animation-duration: 1s;
+    display: none; }
+    .counter .count-2.show {
+      display: block; }
+  .counter .count-1 {
+    background-image: url(/static/images/sprite.png);
+    background-position: 0px 0px;
+    width: 200px;
+    height: 200px;
+    background-size: contain;
+    background-image: url('/static/images/count_1.png');
+    margin: 0 auto;
+    background-position: center;
+    animation-name: example;
+    animation-duration: 1s;
+    display: none; }
+    .counter .count-1.show {
+      display: block; }
+
+@keyframes example {
+  0% {
+    width: 40px;
+    height: 40px; }
+
+  100% {
+    width: 200px;
+    height: 200px; } }
+
+/* The element to apply the animation to */
 .rooms {
   background: #67aac5;
   padding-left: 1000px;

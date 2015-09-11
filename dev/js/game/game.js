@@ -1,6 +1,6 @@
 $(document).ready(function() {
     var game = $('.game');
-
+    var startGame = false;
     if(game.length > 0){
 
         socket.on('connect', function(){
@@ -72,18 +72,42 @@ $(document).ready(function() {
         });
 
         socket.on('ready-to-play', function(users) {
-            console.log('jesteś gotowy?');
+            //console.log('jesteś gotowy?');
             socket.emit('to_user', users);
         });
 
         socket.on('from-second-player', function(users) {
-            console.log(users);
-            $('#results .first-name').html(users.first_name+" <span>("+users.first_id+")</span>");
-            $('#results .first-score').html(users.first_score);
-            $('#results .second-name').html(users.second_name+" <span>("+users.second_id+")</span>");
-            $('#results .second-score').html(users.second_score);
+            //console.log(users);
+            $('#results .first-name').html(users[0][0]+" <span>("+users[0][1]+")</span>");
+            $('#results .first-score').html(0);
+            $('#results .second-name').html(users[1][0]+" <span>("+users[1][1]+")</span>");
+            $('#results .second-score').html(0);
+
+            if(!startGame) {
+                startGame = true;
+
+                var i = 3;
+                var startCount = setInterval(function() {
+                   console.log(i);
+                    $('.counter').show();
+                    $('.count-'+(i+1)).removeClass('show');
+                    $('.count-'+i).addClass('show');
+                    i--;
+                    if(i == 0){
+                        clearInterval(startCount);
+                        setTimeout(function() {
+                            $('.counter').hide();
+                            console.log('Gre rozpocznie gracz: '+users[0][0]);
+                        }, 1000);
+                    }
+                }, 1000);
+            }
         });
 
+        socket.on('player-leave', function(name) {
+           alert(name+ ' left the room, you win!');
+            window.location.href = '/';
+        });
 
     }
 
