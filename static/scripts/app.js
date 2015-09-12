@@ -123,8 +123,20 @@ var rooms = _.template(
 
 $(document).ready(function() {
     var game = $('.game');
+    var board = $('.board');
+
+    var readyToPlay = false;
     var startGame = false;
     var ballInMove = false;
+    var doYouStart = false;
+    var yourNumber = false;
+    var $ball = null;
+    var $myRacket = $('#my-racket #main-racket');
+    var $myRacketPosition = null;
+    var points = {
+        first: 0,
+        second: 0
+    };
 
     if(game.length > 0){
 
@@ -196,12 +208,12 @@ $(document).ready(function() {
             $('#results .second-name').html(users[1][0]+" <span>("+users[1][1]+")</span>");
             $('#results .second-score').html(0);
 
-            if(!startGame) {
-                startGame = true;
+            if(!readyToPlay) {
+                readyToPlay = true;
 
                 var i = 3;
                 var startCount = setInterval(function() {
-                   console.log(i);
+                    console.log(i);
                     $('.counter').show();
                     $('.count-'+(i+1)).removeClass('show');
                     $('.count-'+i).addClass('show');
@@ -210,19 +222,101 @@ $(document).ready(function() {
                         clearInterval(startCount);
                         setTimeout(function() {
                             $('.counter').hide();
-                            console.log('Gre rozpocznie gracz: '+users[0][0]);
-;
+                            //console.log('Gre rozpocznie gracz: '+users[0][0]);
+
                             if($('.pointer[session_id="'+users[0][1]+'"]').length <= 0 && ($('.pointer').length) == 1 && !ballInMove){
-                                $('body').append('<div class="ball opp"></div>');
-                                console.log('pilka dla przeciwnika');
+                                $('body').append('<div class="ball opp small"></div>');
+                                //console.log('pilka dla przeciwnika');
+                                doYouStart = false;
+                                yourNumber = 2;
                             }
                             else if(!ballInMove){
                                 $('body').append('<div class="ball my"></div>');
-                                console.log('pilka dla Ciebie');
+                                //console.log('pilka dla Ciebie');
+                                doYouStart = true;
+                                yourNumber = 1;
                             }
-
+                            startGame = true;
                         }, 1000);
                     }
+                }, 1000);
+            }
+        });
+
+        $(document).mousedown(function(event) {
+            document.oncontextmenu = function() {return false;};
+            if(startGame && doYouStart && !ballInMove) {
+                switch (event.which) {
+                    case 1:
+                        socket.emit('start-game', {
+                            x: 250,
+                            y: 350,
+                            player: yourNumber
+                        });
+                        break;
+                    default:
+                        socket.emit('start-game',{
+                            x: 750,
+                            y: 350,
+                            player: yourNumber
+                        });
+                }
+                ballInMove = true;
+            }
+        });
+
+        socket.on('ball-position', function(data) {
+            //console.log(data);
+            //console.log('YourNumber '+yourNumber);
+            $ball = $('.ball');
+
+            $ball.removeClass('opp').removeClass('my');
+
+            if(data.player == yourNumber) {
+                //console.log('Ty odbiłeś');
+                $ball.addClass('small');
+
+                if(data.x < 500){
+                    $ball.css({
+                        'top': 185+'px',
+                        'left': ((1000-data.x)*(5/15)+320)+'px'
+                    }) ;
+                }
+                else{
+                    $ball.css({
+                        'top': 185+'px',
+                        'left': ((-data.x+1000)*(5/15)+320)+'px'
+                    }) ;
+                }
+            }
+            else {
+                //console.log('przeciwnik odbił');
+                $ball.removeClass('small');
+                $ball.css({
+                    'top': 350+'px',
+                    'left': data.x+'px'
+                });
+
+                //moment kiedy Ty odbijasz
+                setTimeout(function() {
+                    var result = CheckIfPointIsInCircle(data.x, 350);
+                    var x = Math.floor(Math.random() * 999) + 1;
+                    console.info(result);
+                    if(result.l <= result.r) {
+                        socket.emit('start-game', {
+                            x:  x,
+                            player: data.player == 1 ? 2 : 1
+                        });
+                    }
+                    else {
+                        socket.emit('point', {
+                            point: data.player,
+                            x: x,
+                            player: data.player == 1 ? 2 : 1
+                        });
+                    }
+                    //tutaj liczenie x
+
                 }, 1000);
             }
         });
@@ -254,14 +348,59 @@ $(document).ready(function() {
 
         });
 
+        socket.on('set-point', function(data, users) {
+            ballInMove = false;
+            console.log(users);
+            data.point == 1 ? points.first++ : points.second++;
+            $('.first-score').html(points.first);
+            $('.second-score').html(points.second);
+
+            var player =  data.point == 1 ? 0 : 1;
+            $('.ball').remove();
+            if($('.pointer[session_id="'+users[player][1]+'"]').length <= 0 && ($('.pointer').length) == 1 && !ballInMove){
+                $('body').append('<div class="ball opp small"></div>');
+                //console.log('pilka dla przeciwnika');
+                doYouStart = false;
+                yourNumber = 2;
+            }
+            else if(!ballInMove){
+                $('body').append('<div class="ball my"></div>');
+                //console.log('pilka dla Ciebie');
+                doYouStart = true;
+                yourNumber = 1;
+            }
+
+        });
+
         socket.on('player-leave', function(name) {
-           alert(name+ ' left the room, you win!');
+            alert(name+ ' left the room, you win!');
             window.location.href = '/';
         });
 
     }
 
 });
+
+function CheckIfPointIsInCircle(x, y) {
+
+    //promien
+    var r = 66;
+    //środek okręgu S(a,b)
+    var $centerPointer = $('#my-racket #main-racket .center-pointer');
+    var s = $centerPointer.offset();
+    //console.log(s.left + ' '+s.top);
+
+    //(x-a)^2 + (y-b)^2 = r^2
+    //console.log("("+x+"-"+s.left+")^2+("+y+"-"+s.top+")^2 = "+r+"^2");
+    var L = Math.pow( (x - s.left), 2) + Math.pow( (y- s.top), 2);
+    var R = Math.pow( r, 2);
+
+    return {
+        l: L,
+        r: R
+    }
+
+}
 $(document).ready(function() {
     if ($('.index').length > 0) {
         //music

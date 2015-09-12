@@ -94,6 +94,18 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.to( data.room ).emit('from-second-player', getPlayers(players));
     });
 
+    socket.on('start-game', function(data) {
+        socket.emit('ball-position', data);
+        socket.broadcast.to( socket.room ).emit('ball-position', data);
+    });
+
+    socket.on('point', function(data) {
+        var players = roomsDetails[socket.room];
+        socket.emit('set-point', data, getPlayers(players));
+        socket.broadcast.to( socket.room ).emit('set-point', data, getPlayers(players));
+
+    });
+
 });
 
 function getPlayers(players) {

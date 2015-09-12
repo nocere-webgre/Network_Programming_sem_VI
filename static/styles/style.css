@@ -274,6 +274,33 @@ html, body {
   width: 112px;
   height: 192px;
   opacity: 0.6; }
+  #my-racket #main-racket {
+    width: 112px;
+    height: 112px;
+    position: relative; }
+    #my-racket #main-racket .center-pointer {
+      width: 1px;
+      height: 1px;
+      top: 50%;
+      left: 50%;
+      position: absolute; }
+    #my-racket #main-racket .corner {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      background: red; }
+    #my-racket #main-racket .corner-top-left {
+      top: 0;
+      left: 0; }
+    #my-racket #main-racket .corner-top-right {
+      top: 0;
+      right: 0; }
+    #my-racket #main-racket .corner-bottom-left {
+      bottom: 0;
+      left: 0; }
+    #my-racket #main-racket .corner-bottom-right {
+      bottom: 0;
+      right: 0; }
 
 .pointer {
   position: absolute;
@@ -299,23 +326,25 @@ html, body {
     transition: 0ms; }
   .ball.opp {
     top: 185px;
+    -webkit-transition: 0ms;
+    transition: 0ms;
+    z-index: 10; }
+  .ball.small {
     -webkit-transform: scale(0.5);
     -moz-transform: scale(0.5);
     -ms-transform: scale(0.5);
     -o-transform: scale(0.5);
-    transform: scale(0.5);
-    -webkit-transition: 0ms;
-    transition: 0ms;
-    z-index: 10; }
+    transform: scale(0.5); }
 
 #results {
   position: absolute;
   z-index: 3;
   width: 1000px;
   height: 72px;
-  background: #4281a2; }
+  background: #4281a2;
+  text-align: center; }
   #results > div {
-    float: left;
+    display: inline-block;
     font-size: 20px;
     line-height: 20px;
     white-space: nowrap;

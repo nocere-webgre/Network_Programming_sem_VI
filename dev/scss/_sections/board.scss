@@ -15,6 +15,18 @@
   left: 444px;
   @include sprite($my-racket);
   opacity: 0.6;
+
+  #main-racket {
+    width: 112px;
+    height: 112px;
+    position: relative;
+    .center-pointer { width: 1px; height: 1px; top: 50%; left: 50%; position: absolute; }
+    .corner { position: absolute; width: 1px; height: 1px; background: red;}
+    .corner-top-left { top: 0; left: 0; }
+    .corner-top-right { top: 0; right: 0; }
+    .corner-bottom-left { bottom: 0; left: 0; }
+    .corner-bottom-right { bottom: 0; right: 0; }
+  }
 }
 
 .pointer {
@@ -41,20 +53,23 @@
   }
 
   &.opp { top: 185px;
+    -webkit-transition: 0ms;
+    transition: 0ms;
+    z-index: 10;
+  }
+
+  &.small {
     -webkit-transform : scale(0.5);
     -moz-transform    : scale(0.5);
     -ms-transform     : scale(0.5);
     -o-transform      : scale(0.5);
     transform         : scale(0.5);
-    -webkit-transition: 0ms;
-    transition: 0ms;
-    z-index: 10;
   }
 }
 
 #results {
-  position: absolute; z-index: 3; width: 1000px; height: 72px; background: #4281a2;
-  > div { float: left; font-size: 20px; line-height: 20px; white-space: nowrap; padding: 26px;
+  position: absolute; z-index: 3; width: 1000px; height: 72px; background: #4281a2; text-align: center;
+  > div { display: inline-block; font-size: 20px; line-height: 20px; white-space: nowrap; padding: 26px;
     &.score { font-weight: bold; }
     > span { font-size: 11px; opacity: .5}
   }
