@@ -351,7 +351,7 @@ $(document).ready(function() {
         socket.on('set-point', function(data, users) {
             ballInMove = false;
             console.log(users);
-            data.point == 1 ? points.first++ : points.second++;
+            data.point == 1 ? points.second++ : points.first++;
             $('.first-score').html(points.first);
             $('.second-score').html(points.second);
 
